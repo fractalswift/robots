@@ -1,0 +1,43 @@
+setting asteroid x dimension to 5
+setting asteroid y dimension to 5
+creating new robot, number 0
+sending movement instruction to robot number 0 
+sending movement instruction to robot number 0 
+sending movement instruction to robot number 0 
+sending movement instruction to robot number 0 
+sending movement instruction to robot number 0 
+sending movement instruction to robot number 0 
+sending movement instruction to robot number 0 
+sending movement instruction to robot number 0 
+sending movement instruction to robot number 0 
+creating new robot, number 1
+sending movement instruction to robot number 1 
+sending movement instruction to robot number 1 
+sending movement instruction to robot number 1 
+sending movement instruction to robot number 1 
+sending movement instruction to robot number 1 
+sending movement instruction to robot number 1 
+sending movement instruction to robot number 1 
+sending movement instruction to robot number 1 
+sending movement instruction to robot number 1 
+sending movement instruction to robot number 1 
+now calling the robots methods to get their output
+calling turn left, bearing = west  self.x = 1, self.y = 2
+calling move forward, bearing = west  self.x = 0, self.y = 2
+calling turn left, bearing = south  self.x = 0, self.y = 2
+calling move forward, bearing = south  self.x = 0, self.y = 1
+calling turn left, bearing = east  self.x = 0, self.y = 1
+calling move forward, bearing = east  self.x = 1, self.y = 1
+calling turn left, bearing = north  self.x = 1, self.y = 1
+calling move forward, bearing = north  self.x = 1, self.y = 2
+calling move forward, bearing = north  self.x = 1, self.y = 3
+calling move forward, bearing = east  self.x = 4, self.y = 3
+calling move forward, bearing = east  self.x = 5, self.y = 3
+calling turn right, bearing = south  self.x = 5, self.y = 3
+calling move forward, bearing = south  self.x = 5, self.y = 2
+calling move forward, bearing = south  self.x = 5, self.y = 1
+calling turn right, bearing = west  self.x = 5, self.y = 1
+calling move forward, bearing = west  self.x = 4, self.y = 1
+calling turn right, bearing = north  self.x = 4, self.y = 1
+calling turn right, bearing = east  self.x = 4, self.y = 1
+calling move forward, bearing = east  self.x = 5, self.y = 1

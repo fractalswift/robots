@@ -2,6 +2,15 @@ import sys
 import json
 
 
+# Clear the log file 
+
+open('log.txt', 'w').close()
+
+
+log = []
+
+
+
 class Processor:
     def __init__(self, instructions_ref, mode):
 
@@ -19,25 +28,28 @@ class Processor:
         robots = []
 
         for row in instructions:
-
+            
+            # error handling in case there is an empty string
+            # in the instructions etc
             try:
                 row = json.loads(row)
             except:
                 row = {'type': 'finished'}
+                
 
             if row.get('type') == 'asteroid':
                 ast_x = row.get('size').get('x')
                 ast_y = row.get('size').get('y')
                 ast_mode = 'default'
                 asteroid = Asteroid(ast_x, ast_y, ast_mode)
-                print(
-                    f'setting asteroid dimensions to x: {row.get("size").get("x")}')
-                print(
-                    f'setting asteroid dimensions to y: {row.get("size").get("y")}')
+                log.append(
+                    f'setting asteroid x dimension to {row.get("size").get("x")}')
+                log.append(
+                    f'setting asteroid y dimension to {row.get("size").get("y")}')
 
             if row.get('type') == 'new-robot':
                 robot_count += 1
-                print(f'creating new robot, number {robot_count}')
+                log.append(f'creating new robot, number {robot_count}')
                 x = row.get('position').get('x')
                 y = row.get('position').get('y')
                 bearing = row.get('bearing')
@@ -45,11 +57,11 @@ class Processor:
                 robots.append(Robot(x, y, bearing))
 
             if row.get('type') == 'move':
-                print(
+                log.append(
                     f'sending movement instruction to robot number {robot_count} ')
                 robots[robot_count].store_move(row.get('movement'))
 
-        print('now calling the robots methods to get their output')
+        log.append('now calling the robots methods to get their output')
 
         for row in robots:
             print(row.calculate_location(asteroid.share_size()))
@@ -79,56 +91,44 @@ class Robot:
 
         if self.bearing == 'north':
             self.bearing = 'west'
-            print(f'calling self.bearing = {self.bearing}')
             return
 
         if self.bearing == 'west':
             self.bearing = 'south'
-            print(f'calling self.bearing = {self.bearing}')
             return
 
         if self.bearing == 'south':
             self.bearing = 'east'
-            print(f'calling self.bearing = {self.bearing}')
             return
 
         if self.bearing == 'east':
             self.bearing = 'north'
-            print(f'calling self.bearing = {self.bearing}')
             return
 
     def turn_right(self):
         if self.bearing == 'north':
             self.bearing = 'east'
-            print(f'calling self.bearing = {self.bearing}')
             return
         if self.bearing == 'east':
             self.bearing = 'south'
-            print(f'calling self.bearing = {self.bearing}')
             return
         if self.bearing == 'south':
             self.bearing = 'west'
-            print(f'calling self.bearing = {self.bearing}')
             return
         if self.bearing == 'west':
             self.bearing = 'north'
-            print(f'calling self.bearing = {self.bearing}')
             return
 
     def move_forward(self):
 
         if self.bearing == 'north':
             self.y += 1
-            print(f'calling self.y = {self.y}')
         if self.bearing == 'east':
             self.x += 1
-            print(f'calling self.x = {self.x}')
         if self.bearing == 'south':
             self.y -= 1
-            print(f'calling self.y = {self.y}')
         if self.bearing == 'west':
             self.x -= 1
-            print(f'calling self.x = {self.x}')
 
     def calculate_location(self, ast_size):
 
@@ -136,15 +136,15 @@ class Robot:
 
             if move == 'turn-left':
                 self.turn_left()
-                print(
+                log.append(
                     f'calling turn left, bearing = {self.bearing}  self.x = {self.x}, self.y = {self.y}')
             if move == 'turn-right':
                 self.turn_right()
-                print(
+                log.append(
                     f'calling turn right, bearing = {self.bearing}  self.x = {self.x}, self.y = {self.y}')
             if move == 'move-forward':
                 self.move_forward()
-                print(
+                log.append(
                     f'calling move forward, bearing = {self.bearing}  self.x = {self.x}, self.y = {self.y}')
 
         ast_x = ast_size[0]
@@ -173,5 +173,11 @@ mode_ref = sys.argv[2] if len(sys.argv) == 3 else 'default'
 processor = Processor(instructions_ref, mode_ref)
 
 processor.process_instructions()
+
+
+with open('log.txt', 'w') as f:
+    for row in log:
+        f.write("%s\n" % row)
+
 
 
