@@ -2,13 +2,11 @@ import sys
 import json
 
 
-# Clear the log file 
+# Clear the log file from previous runs
 
 open('log.txt', 'w').close()
 
-
 log = []
-
 
 
 class Processor:
@@ -28,14 +26,13 @@ class Processor:
         robots = []
 
         for row in instructions:
-            
-            # error handling in case there is an empty string
+
+            # Error handling in case there is an empty string
             # in the instructions etc
             try:
                 row = json.loads(row)
             except:
                 row = {'type': 'finished'}
-                
 
             if row.get('type') == 'asteroid':
                 ast_x = row.get('size').get('x')
@@ -164,16 +161,23 @@ class Robot:
             if self.y <= 0:
                 y = self.y + ast_y
 
-   
-
         return {"type": "robot", "position": {"x": x, "y": y}, "bearing": self.bearing}
 
 
-instructions_ref = sys.argv[1]
+# Make sure we have some instructions, if not load the example instructions
+
+try:
+    instructions_ref = sys.argv[1]
+except:
+    instructions_ref = 'instructions.txt'
+    print('No instructions given in command line, \
+results using example instructions:')
 
 mode_ref = sys.argv[2] if len(sys.argv) == 3 else 'default'
 
 log.append(f'Mode from command line is {mode_ref}')
+
+# Instantiate the processor and process the instructions
 
 processor = Processor(instructions_ref, mode_ref)
 
@@ -183,6 +187,3 @@ processor.process_instructions()
 with open('log.txt', 'w') as f:
     for row in log:
         f.write("%s\n" % row)
-
-
-
