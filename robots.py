@@ -40,7 +40,7 @@ class Processor:
             if row.get('type') == 'asteroid':
                 ast_x = row.get('size').get('x')
                 ast_y = row.get('size').get('y')
-                ast_mode = 'default'
+                ast_mode = self.mode
                 asteroid = Asteroid(ast_x, ast_y, ast_mode)
                 log.append(
                     f'setting asteroid x dimension to {row.get("size").get("x")}')
@@ -153,6 +153,7 @@ class Robot:
         x = self.x
         y = self.y
 
+        log.append(f'Mode is {ast_mode}')
         if ast_mode == '3d':
             if self.x >= ast_x:
                 x = self.x - ast_x
@@ -163,12 +164,16 @@ class Robot:
             if self.y <= 0:
                 y = self.y + ast_y
 
+   
+
         return {"type": "robot", "position": {"x": x, "y": y}, "bearing": self.bearing}
 
 
 instructions_ref = sys.argv[1]
 
 mode_ref = sys.argv[2] if len(sys.argv) == 3 else 'default'
+
+log.append(f'Mode from command line is {mode_ref}')
 
 processor = Processor(instructions_ref, mode_ref)
 
