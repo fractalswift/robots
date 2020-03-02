@@ -1,16 +1,6 @@
 Mode from command line is 3d
 setting asteroid x dimension to 5
 setting asteroid y dimension to 5
-creating new robot, number 0
-sending movement instruction to robot number 0 
-sending movement instruction to robot number 0 
-sending movement instruction to robot number 0 
-sending movement instruction to robot number 0 
-sending movement instruction to robot number 0 
-sending movement instruction to robot number 0 
-sending movement instruction to robot number 0 
-sending movement instruction to robot number 0 
-sending movement instruction to robot number 0 
 creating new robot, number 1
 sending movement instruction to robot number 1 
 sending movement instruction to robot number 1 
@@ -21,7 +11,17 @@ sending movement instruction to robot number 1
 sending movement instruction to robot number 1 
 sending movement instruction to robot number 1 
 sending movement instruction to robot number 1 
-sending movement instruction to robot number 1 
+creating new robot, number 2
+sending movement instruction to robot number 2 
+sending movement instruction to robot number 2 
+sending movement instruction to robot number 2 
+sending movement instruction to robot number 2 
+sending movement instruction to robot number 2 
+sending movement instruction to robot number 2 
+sending movement instruction to robot number 2 
+sending movement instruction to robot number 2 
+sending movement instruction to robot number 2 
+sending movement instruction to robot number 2 
 now calling the robots methods to get their output
 calling turn left, bearing = west  self.x = 1, self.y = 2
 calling move forward, bearing = west  self.x = 0, self.y = 2

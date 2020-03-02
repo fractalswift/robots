@@ -27,4 +27,3 @@ def test_asteroid_size_and_mode():
         assert asteroid.x == s[0] and asteroid.y == s[1] and asteroid.mode == s[2]
 
 
-

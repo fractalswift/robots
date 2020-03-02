@@ -20,8 +20,12 @@ class Processor:
         with open(instructions_ref) as file:
             data = file.read()
 
+        # Split data into rows for iteration
         instructions = data.split('\n')
 
+        # Avoid off by one error later
+        # as we will use the robot's number to find its index
+        # in the list of robots when we send it instructions
         robot_count = -1
         robots = []
 
@@ -32,6 +36,9 @@ class Processor:
             try:
                 row = json.loads(row)
             except:
+                # Avoid .get throwing an error by making
+                # replacing blank row with a dictionary 
+                # even though it won't be used
                 row = {'type': 'finished'}
 
             if row.get('type') == 'asteroid':
@@ -44,22 +51,28 @@ class Processor:
                 log.append(
                     f'setting asteroid y dimension to {row.get("size").get("y")}')
 
+            
+            # if new-robot, create a new robot and add it to the robots list
             if row.get('type') == 'new-robot':
                 robot_count += 1
-                log.append(f'creating new robot, number {robot_count}')
+                log.append(f'creating new robot, number {robot_count +1}')
                 x = row.get('position').get('x')
                 y = row.get('position').get('y')
                 bearing = row.get('bearing')
 
                 robots.append(Robot(x, y, bearing))
 
+            # new-robot is always followed by instructions for that robot
+            # so send the instuctions to the right robot!
             if row.get('type') == 'move':
                 log.append(
-                    f'sending movement instruction to robot number {robot_count} ')
+                    f'sending movement instruction to robot number {robot_count +1} ')
                 robots[robot_count].store_move(row.get('movement'))
 
         log.append('now calling the robots methods to get their output')
 
+        # Now all objects have been set up, call the robots to
+        # calculate their loction then output it to the console
         for row in robots:
             print(row.calculate_location(asteroid.share_size()))
 
@@ -144,12 +157,16 @@ class Robot:
                 log.append(
                     f'calling move forward, bearing = {self.bearing}  self.x = {self.x}, self.y = {self.y}')
 
+        
+        # Code below only relevant if mode is set to 3d
         ast_x = ast_size[0]
         ast_y = ast_size[1]
         ast_mode = ast_size[2]
         x = self.x
         y = self.y
 
+        # if mode is 3d, the robot can't go past x4 or y4 on a 5x5 asteroid
+        # therefor it will go all around and back to 0
         log.append(f'Mode is {ast_mode}')
         if ast_mode == '3d':
             if self.x >= ast_x:
@@ -161,8 +178,11 @@ class Robot:
             if self.y <= 0:
                 y = self.y + ast_y
 
+        # Finally, output final location of robot!
         return {"type": "robot", "position": {"x": x, "y": y}, "bearing": self.bearing}
 
+
+# Execution logic:
 
 # Make sure we have some instructions, if not load the example instructions
 

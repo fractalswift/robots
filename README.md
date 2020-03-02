@@ -9,7 +9,7 @@ python3 robots.py instructions.txt
 
 Optional mode parameter:
 
-python3 roboys.py instructions.txt 3d
+python3 robots.py instructions.txt 3d
 
 This will mean that if the robot goes past the end of the map, it returns to origin for that axis (this is calculated at the end of execution).
 
